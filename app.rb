@@ -6,7 +6,7 @@ class WordGuesserApp < Sinatra::Base
   enable :sessions
   register Sinatra::Flash
 
-  set :host_authorization, { permitted_hosts: [] }  
+  set :host_authorization, { permitted_hosts: [] }
 
   before do
     @game = session[:game] || WordGuesserGame.new('')
@@ -19,7 +19,7 @@ class WordGuesserApp < Sinatra::Base
   # These two routes are good examples of Sinatra syntax
   # to help you with the rest of the assignment
   get '/' do
-    redirect '/new'
+    '<!DOCTYPE html><html><body><h1>Hello World</h1></html>'
   end
 
   get '/new' do
