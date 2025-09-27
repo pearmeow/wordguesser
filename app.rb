@@ -66,12 +66,12 @@ class WordGuesserApp < Sinatra::Base
 end
 
 class WordGuesserGame
-  attr_reader :word, :guesses, :wrong_guesses
+  attr_accessor :word, :guesses, :wrong_guesses
 
   def initialize(word)
-    @word = word
-    @guesses = ''
-    @wrong_guesses = ''
+    self.word = word
+    self.guesses = ''
+    self.wrong_guesses = ''
   end
 
   def guess(letter)
@@ -80,13 +80,30 @@ class WordGuesserGame
     raise ArgumentError unless /[A-Za-z]/.match?(letter)
 
     letter.downcase!
-    if @word.include?(letter)
-      return false if @guesses.include?(letter)
+    if word.include?(letter)
+      return false if guesses.include?(letter)
 
-      return @guesses += letter
+      return self.guesses += letter
     end
-    return false if @wrong_guesses.include?(letter)
+    return false if wrong_guesses.include?(letter)
 
-    @wrong_guesses += letter
+    self.wrong_guesses += letter
+  end
+
+  def word_with_guesses
+    word.each_char.reduce('') do |memo, letter|
+      if guesses.include?(letter)
+        "#{memo}#{letter}"
+      else
+        "#{memo}-"
+      end
+    end
+  end
+
+  def check_win_or_lose
+    return :lose if wrong_guesses.length >= 7
+    return :win if word == word_with_guesses
+
+    :play
   end
 end
