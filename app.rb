@@ -64,3 +64,46 @@ class WordGuesserApp < Sinatra::Base
     erb :lose # You may change/remove this line
   end
 end
+
+class WordGuesserGame
+  attr_accessor :word, :guesses, :wrong_guesses
+
+  def initialize(word)
+    self.word = word
+    self.guesses = ''
+    self.wrong_guesses = ''
+  end
+
+  def guess(letter)
+    raise ArgumentError if letter.nil?
+    raise ArgumentError unless letter.length == 1
+    raise ArgumentError unless /[A-Za-z]/.match?(letter)
+
+    letter.downcase!
+    if word.include?(letter)
+      return false if guesses.include?(letter)
+
+      return self.guesses += letter
+    end
+    return false if wrong_guesses.include?(letter)
+
+    self.wrong_guesses += letter
+  end
+
+  def word_with_guesses
+    word.each_char.reduce('') do |memo, letter|
+      if guesses.include?(letter)
+        "#{memo}#{letter}"
+      else
+        "#{memo}-"
+      end
+    end
+  end
+
+  def check_win_or_lose
+    return :lose if wrong_guesses.length >= 7
+    return :win if word == word_with_guesses
+
+    :play
+  end
+end
