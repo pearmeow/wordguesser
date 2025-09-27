@@ -19,7 +19,7 @@ class WordGuesserApp < Sinatra::Base
   # These two routes are good examples of Sinatra syntax
   # to help you with the rest of the assignment
   get '/' do
-    '<!DOCTYPE html><html><body><h1>Hello World</h1></html>'
+    redirect '/new'
   end
 
   get '/new' do
