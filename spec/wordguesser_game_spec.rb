@@ -9,8 +9,8 @@ describe WordGuesserGame do
     end
   end
 
-  describe 'new', pending: true do
-    it "takes a parameter and returns a WordGuesserGame object" do
+  describe 'new', true do
+    it 'takes a parameter and returns a WordGuesserGame object' do
       @game = described_class.new('glorp')
       expect(@game).to be_an_instance_of(described_class)
       expect(@game.word).to eq('glorp')
@@ -19,19 +19,19 @@ describe WordGuesserGame do
     end
   end
 
-  describe 'guessing', pending: true do
+  describe 'guessing', true do
     context 'correctly' do
       before do
         @game = described_class.new('garply')
         @valid = @game.guess('a')
       end
 
-      it 'changes correct guess list', pending: true do
+      it 'changes correct guess list', true do
         expect(@game.guesses).to eq('a')
         expect(@game.wrong_guesses).to eq('')
       end
 
-      it 'returns true', pending: true do
+      it 'returns true', true do
         expect(@valid).not_to be false
       end
     end
@@ -42,12 +42,12 @@ describe WordGuesserGame do
         @valid = @game.guess('z')
       end
 
-      it 'changes wrong guess list', pending: true do
+      it 'changes wrong guess list', true do
         expect(@game.guesses).to eq('')
         expect(@game.wrong_guesses).to eq('z')
       end
 
-      it 'returns true', pending: true do
+      it 'returns true', true do
         expect(@valid).not_to be false
       end
     end
@@ -58,22 +58,22 @@ describe WordGuesserGame do
         guess_several_letters(@game, 'aq')
       end
 
-      it 'does not change correct guess list', pending: true do
+      it 'does not change correct guess list', true do
         @game.guess('a')
         expect(@game.guesses).to eq('a')
       end
 
-      it 'does not change wrong guess list', pending: true do
+      it 'does not change wrong guess list', true do
         @game.guess('q')
         expect(@game.wrong_guesses).to eq('q')
       end
 
-      it 'returns false', pending: true do
+      it 'returns false', true do
         expect(@game.guess('a')).to be false
         expect(@game.guess('q')).to be false
       end
 
-      it 'is case insensitive', pending: true do
+      it 'is case insensitive', true do
         expect(@game.guess('A')).to be false
         expect(@game.guess('Q')).to be false
         expect(@game.guesses).not_to include('A')
@@ -86,15 +86,15 @@ describe WordGuesserGame do
         @game = described_class.new('foobar')
       end
 
-      it 'throws an error when empty', pending: true do
+      it 'throws an error when empty', true do
         expect { @game.guess('') }.to raise_error(ArgumentError)
       end
 
-      it 'throws an error when not a letter', pending: true do
+      it 'throws an error when not a letter', true do
         expect { @game.guess('%') }.to raise_error(ArgumentError)
       end
 
-      it 'throws an error when nil', pending: true do
+      it 'throws an error when nil', true do
         expect { @game.guess(nil) }.to raise_error(ArgumentError)
       end
     end

@@ -64,3 +64,29 @@ class WordGuesserApp < Sinatra::Base
     erb :lose # You may change/remove this line
   end
 end
+
+class WordGuesserGame
+  attr_reader :word, :guesses, :wrong_guesses
+
+  def initialize(word)
+    @word = word
+    @guesses = ''
+    @wrong_guesses = ''
+  end
+
+  def guess(letter)
+    raise ArgumentError if letter.nil?
+    raise ArgumentError unless letter.length == 1
+    raise ArgumentError unless /[A-Za-z]/.match?(letter)
+
+    letter.downcase!
+    if @word.include?(letter)
+      return false if @guesses.include?(letter)
+
+      return @guesses += letter
+    end
+    return false if @wrong_guesses.include?(letter)
+
+    @wrong_guesses += letter
+  end
+end
